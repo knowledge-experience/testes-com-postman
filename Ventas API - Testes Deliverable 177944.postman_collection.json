@@ -1,0 +1,838 @@
+{
+	"info": {
+		"_postman_id": "90170aa8-3d5f-444b-a520-309bc11889db",
+		"name": "Ventas API - Testes Deliverable 177944",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CRM API",
+			"item": [
+				{
+					"name": "ClienteCRM",
+					"item": [
+						{
+							"name": "POST",
+							"item": [
+								{
+									"name": "177944 - Adicionar atributo em Lead/Cliente - POST",
+									"item": [
+										{
+											"name": "campos informados",
+											"item": [
+												{
+													"name": "POST ClienteCRM - identificadorDaUnidadeDeNegocio informado (PLLDB) - Persistido na base de dados MongoDB e MySQL",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"POST ClienteCRM - identificadorDaUnidadeDeNegocio informado (PLLDB) - Status 202 Accepted\", function () {\r",
+																	"    pm.response.to.have.status(202);\r",
+																	"});\r",
+																	"\r",
+																	"var jsonData = pm.response.json();\r",
+																	"var identificadorUnicoObtido = jsonData.identificadorUnico;\r",
+																	"var nomeCompletoObtido = jsonData.nomeCompleto;\r",
+																	"var mensagemObtida = jsonData.mensagem;\r",
+																	"\r",
+																	"var nomeCompletoEsperado = \"Teste identificadorDaUnidadeDeNegocio informado - PLLDB\";\r",
+																	"var mensagemEsperada = \"Lead/Cliente recebido com sucesso\"\r",
+																	"\r",
+																	"pm.test(\"POST ClienteCRM - identificadorDaUnidadeDeNegocio informado (PLLDB) - Dados e Mensagem retornados\", function () {\r",
+																	"    pm.expect(identificadorUnicoObtido).is.not.null;\r",
+																	"    pm.expect(nomeCompletoObtido).to.include(nomeCompletoEsperado);\r",
+																	"    pm.expect(mensagemObtida).to.include(mensagemEsperada);\r",
+																	"});\r",
+																	"\r",
+																	"// Persistido na base de dados MongoDB \r",
+																	"/* --- BASE DE DADOS MONGODB ---\r",
+																	"Acessar a base de dados MongoDB\r",
+																	"Estar no menu lateral esquerdo\r",
+																	"Em \"Recents\", clicar na conection string de staging\r",
+																	"Clicar no botão \"Connect\"\r",
+																	"Em \"Database Name\", clicar em \"ventas\"\r",
+																	"Em \"Collection Name\", clicar em \"clientes\"\r",
+																	"\r",
+																	"Após ter executado essa requisição, e for retornado Status 202 Accepted\r",
+																	"E a aba \"Test Results\" estiver toda verdinha (caso não estiver, tentar executar a requisição novamente ou ajustar de acordo com a mensagem retornada nos testes que falharam na aba \"Test Results\")\r",
+																	"No Body de retorno do Postman, copiar o valor do campo nomeCompleto COM as aspas duplas \"\"\r",
+																	"Ex.: \"Teste identificadorDaUnidadeDeNegocio informado - PLLDB 524\"\r",
+																	"\r",
+																	"Retornar ao MongoDB\r",
+																	"No campo \"FILTER\", informar: { nome: <nomeCompleto retornado e copiado da API com as aspas duplas> }\r",
+																	"\r",
+																	"Apagar o trecho <nomeCompleto retornado e copiado da API com as aspas duplas>, e colar o valor copiado com as aspas duplas do campo nomeCompleto anteriormente\r",
+																	"Ex.: { nome: \"Teste identificadorDaUnidadeDeNegocio informado - PLLDB 524\" }\r",
+																	"\r",
+																	"Clicar no botão \"FIND\"\r",
+																	"\r",
+																	"Nos campos abaixo deve ser apresentado com os mesmos dados informados e retornados na requisição:\r",
+																	"- nome: \"Teste identificadorDaUnidadeDeNegocio informado - PLLDB <numero>\"\r",
+																	"- unidadeDeNegocioId: \"08d9c934-b935-4277-8bf8-4af6db48209e\"\r",
+																	"- sincronizadoComOBack: true\r",
+																	"\r",
+																	"*/\r",
+																	"\r",
+																	"// Persistido na base de dados MySQL \r",
+																	"/* --- BASE DE DADOS MYSQL ---\r",
+																	"Na base de dados MySQL, clicar no menu \"SQL Editor\" > \"New SQL script\" \r",
+																	"Ou clicar no menu \"Editor de SQL\" > \"Novo editor de SQL\"\r",
+																	"\r",
+																	"Copiar o script SQL abaixo:\r",
+																	"\r",
+																	"select\r",
+																	"\tcliente.id,\r",
+																	"\tcliente.ds_id_crm,\r",
+																	"\tpessoa_fisica.ds_nome,\r",
+																	"    cliente.dt_criacao,\r",
+																	"    cliente.st_ativo,\r",
+																	"\tcliente.unidade_de_negocio_id,\r",
+																	"    unidade_de_negocio.ds_identificador_da_unidade_de_negocio\r",
+																	"from\r",
+																	"\tpessoa_fisica,\r",
+																	"    cliente,\r",
+																	"    unidade_de_negocio\r",
+																	"where\r",
+																	"\tpessoa_fisica.Id = cliente.Id\r",
+																	"\tand\r",
+																	"    cliente.unidade_de_negocio_id = unidade_de_negocio.id\r",
+																	"    and\r",
+																	"    cliente.ds_id_crm = '<identificadorUnico retornado e copiado da API>'\r",
+																	"\r",
+																	"Retornar a base de dados MySQL, colar o script SQL\r",
+																	"\r",
+																	"Após ter executado essa requisição, no Body de retorno do Postman, copiar o valor do campo identificadorUnico SEM as aspas duplas \"\"\r",
+																	"\r",
+																	"Retornar a base de dados, apagar o trecho <identificadorUnico retornado e copiado da API>, e colar entre as aspas simples '' o valor copiado do campo identificadorUnico anteriormente\r",
+																	"Ex.:\r",
+																	"    ...\r",
+																	"    and\r",
+																	"    cliente.ds_id_crm = 'dd087829-2916-489c-93f8-c028ca40d5aa'\r",
+																	"\r",
+																	"No painel superior, no canto superior esquerdo, clicar no triãngulo laranja \">\" para executar o script SQL \r",
+																	"\r",
+																	"Se for apresentado alguma mensagem sobre não ser permitido conexão devido a alguma mudança de IP:\r",
+																	"- Acessar esse link da wiki: https://db1global.visualstudio.com/Plaenge/_wiki/wikis/Plaenge.wiki/1789/Configurar-Base-de-dados-no-ambiente-de-staging?anchor=base-de-dados-no-ambiente-de-staging-(demais-acessos)\r",
+																	"- Seguir os passos da seção \"Base de dados no ambiente de staging (Demais acessos)\" \r",
+																	"\r",
+																	"No painel inferior, no canto inferior esquerdo, NÃO clicar na opção \"Record\", NÃO clicar na opção \"Record\"\r",
+																	"\r",
+																	"Deve ser persistido na base de dados MySQL e deve ser apresentado os mesmos dados informados e retornados na requisição, inclsuive:\r",
+																	"- st_ativo = 0\r",
+																	"- unidade_de_negocio_id = 08d9c934-b935-4277-8bf8-4af6db48209e\r",
+																	"- ds_identificador_da_unidade_de_negocio = PLLDB\r",
+																	"\r",
+																	"*/\r",
+																	""
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json",
+																"type": "text"
+															},
+															{
+																"key": "ApiKey",
+																"value": "{{apiKey}}",
+																"type": "text"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n    \"idNoCRM\": \"{{idNoCRM}}\",\n    \"nomeCompleto\": \"Teste identificadorDaUnidadeDeNegocio informado - PLLDB {{numero1}}\",\n    \"identificadorDaUnidadeDeNegocio\": \"PLLDB\", // algum identificador resultante dessa consulta a base de dados select ds_identificador_da_unidade_de_negocio from unidade_de_negocio;\n    \"ativo\": false\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/api/ClienteCRM",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"ClienteCRM"
+															]
+														}
+													},
+													"response": [
+														{
+															"name": "POST ClienteCRM - identificadorDaUnidadeDeNegocio informado (PLLDB) - Persistido na base de dados MongoDB e MySQL",
+															"originalRequest": {
+																"method": "POST",
+																"header": [
+																	{
+																		"key": "Content-Type",
+																		"name": "Content-Type",
+																		"value": "application/json",
+																		"type": "text"
+																	},
+																	{
+																		"key": "ApiKey",
+																		"value": "{{apiKey}}",
+																		"type": "text"
+																	}
+																],
+																"body": {
+																	"mode": "raw",
+																	"raw": "{\n    \"idNoCRM\": \"{{idNoCRM}}\",\n    \"nomeCompleto\": \"Teste identificadorDaUnidadeDeNegocio informado - PLLDB {{numero1}}\",\n    \"identificadorDaUnidadeDeNegocio\": \"PLLDB\", // algum identificador resultante dessa consulta a base de dados select ds_identificador_da_unidade_de_negocio from unidade_de_negocio;\n    \"ativo\": false\n}",
+																	"options": {
+																		"raw": {
+																			"language": "json"
+																		}
+																	}
+																},
+																"url": {
+																	"raw": "{{baseUrl}}/api/ClienteCRM",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"api",
+																		"ClienteCRM"
+																	]
+																}
+															},
+															"status": "Accepted",
+															"code": 202,
+															"_postman_previewlanguage": "json",
+															"header": [
+																{
+																	"key": "Content-Length",
+																	"value": "185"
+																},
+																{
+																	"key": "Content-Type",
+																	"value": "application/json; charset=utf-8"
+																},
+																{
+																	"key": "Request-Context",
+																	"value": "appId=cid-v1:afd14cd8-fe6b-4082-91a3-10d18b487a7c"
+																},
+																{
+																	"key": "X-Cache",
+																	"value": "CONFIG_NOCACHE"
+																},
+																{
+																	"key": "X-Azure-Ref",
+																	"value": "0HpnfYQAAAABtlimGc9ltQZZDdrMUSmtTR1JVMzBFREdFMDgxMABjY2JiZDc5Mi1lNjZkLTQyNzAtYjM5Ny0yMjlmNmI5ZTkwNzQ="
+																},
+																{
+																	"key": "Date",
+																	"value": "Thu, 13 Jan 2022 03:14:39 GMT"
+																}
+															],
+															"cookie": [],
+															"body": "{\n    \"identificadorUnico\": \"dd087829-2916-489c-93f8-c028ca40d5aa\",\n    \"nomeCompleto\": \"Teste identificadorDaUnidadeDeNegocio informado - PLLDB 524\",\n    \"mensagem\": \"Lead/Cliente recebido com sucesso\"\n}"
+														}
+													]
+												}
+											]
+										},
+										{
+											"name": "identificadorDaUnidadeDeNegocio",
+											"item": [
+												{
+													"name": "identificadorDaUnidadeDeNegocio informado (não cadastrado na tabela unidade_de_negocio)",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"identificadorDaUnidadeDeNegocio informado (não cadastrado na tabela unidade_de_negocio) - Status 400 Bad Request\", function () {\r",
+																	"    pm.response.to.have.status(400);\r",
+																	"});\r",
+																	"\r",
+																	"var jsonData = pm.response.json();\r",
+																	"var mensagemObtida = jsonData;\r",
+																	"\r",
+																	"var mensagemEsperada = \"Unidade de negócio com identificador IDNAOCADASTRADO não encontrada.\"\r",
+																	"\r",
+																	"pm.test(\"identificadorDaUnidadeDeNegocio informado (não cadastrado na tabela unidade_de_negocio) - Mensagem retornada\", function () {\r",
+																	"    pm.expect(mensagemObtida).to.include(mensagemEsperada);\r",
+																	"});\r",
+																	""
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json",
+																"type": "text"
+															},
+															{
+																"key": "ApiKey",
+																"value": "{{apiKey}}",
+																"type": "text"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n    \"idNoCRM\": \"{{idNoCRM}}\",\n    \"nomeCompleto\": \"Teste identificadorDaUnidadeDeNegocio informado - nao cadastrado tabela unidade_de_negocio {{numero1}}\",\n    \"identificadorDaUnidadeDeNegocio\": \"IDNAOCADASTRADO\", \n    \"ativo\": false\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/api/ClienteCRM",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"ClienteCRM"
+															]
+														}
+													},
+													"response": [
+														{
+															"name": "identificadorDaUnidadeDeNegocio informado (não cadastrado na tabela unidade_de_negocio)",
+															"originalRequest": {
+																"method": "POST",
+																"header": [
+																	{
+																		"key": "Content-Type",
+																		"name": "Content-Type",
+																		"value": "application/json",
+																		"type": "text"
+																	},
+																	{
+																		"key": "ApiKey",
+																		"value": "{{apiKey}}",
+																		"type": "text"
+																	}
+																],
+																"body": {
+																	"mode": "raw",
+																	"raw": "{\n    \"idNoCRM\": \"{{idNoCRM}}\",\n    \"nomeCompleto\": \"Teste identificadorDaUnidadeDeNegocio informado - nao cadastrado tabela unidade_de_negocio {{numero1}}\",\n    \"identificadorDaUnidadeDeNegocio\": \"IDNAOCADASTRADO\", \n    \"ativo\": false\n}",
+																	"options": {
+																		"raw": {
+																			"language": "json"
+																		}
+																	}
+																},
+																"url": {
+																	"raw": "{{baseUrl}}/api/ClienteCRM",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"api",
+																		"ClienteCRM"
+																	]
+																}
+															},
+															"status": "Bad Request",
+															"code": 400,
+															"_postman_previewlanguage": "json",
+															"header": [
+																{
+																	"key": "Content-Length",
+																	"value": "74"
+																},
+																{
+																	"key": "Content-Type",
+																	"value": "application/json; charset=utf-8"
+																},
+																{
+																	"key": "Request-Context",
+																	"value": "appId=cid-v1:afd14cd8-fe6b-4082-91a3-10d18b487a7c"
+																},
+																{
+																	"key": "X-Cache",
+																	"value": "CONFIG_NOCACHE"
+																},
+																{
+																	"key": "X-Azure-Ref",
+																	"value": "0LrHfYQAAAACcVcyU+KqfR7ebKUEsLt4DR1JVMzBFREdFMDgxMwBjY2JiZDc5Mi1lNjZkLTQyNzAtYjM5Ny0yMjlmNmI5ZTkwNzQ="
+																},
+																{
+																	"key": "Date",
+																	"value": "Thu, 13 Jan 2022 04:57:18 GMT"
+																}
+															],
+															"cookie": [],
+															"body": "[\n    \"Unidade de negócio com identificador IDNAOCADASTRADO não encontrada.\"\n]"
+														}
+													]
+												},
+												{
+													"name": "identificadorDaUnidadeDeNegocio não informado (vazio)",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"identificadorDaUnidadeDeNegocio não informado (vazio) - Status 202 Accepted\", function () {\r",
+																	"    pm.response.to.have.status(202);\r",
+																	"});\r",
+																	"\r",
+																	"var jsonData = pm.response.json();\r",
+																	"var identificadorUnicoObtido = jsonData.identificadorUnico;\r",
+																	"var nomeCompletoObtido = jsonData.nomeCompleto;\r",
+																	"var mensagemObtida = jsonData.mensagem;\r",
+																	"\r",
+																	"var nomeCompletoEsperado = \"Teste identificadorDaUnidadeDeNegocio nao informado - vazio\";\r",
+																	"var mensagemEsperada = \"Lead/Cliente recebido com sucesso\"\r",
+																	"\r",
+																	"pm.test(\"identificadorDaUnidadeDeNegocio não informado (vazio) - Dados e Mensagem retornados\", function () {\r",
+																	"    pm.expect(identificadorUnicoObtido).is.not.null;\r",
+																	"    pm.expect(nomeCompletoObtido).to.include(nomeCompletoEsperado);\r",
+																	"    pm.expect(mensagemObtida).to.include(mensagemEsperada);\r",
+																	"});\r",
+																	"\r",
+																	"// Persistido na base de dados MongoDB \r",
+																	"/* --- BASE DE DADOS MONGODB ---\r",
+																	"Acessar a base de dados MongoDB\r",
+																	"Estar no menu lateral esquerdo\r",
+																	"Em \"Recents\", clicar na conection string de staging\r",
+																	"Clicar no botão \"Connect\"\r",
+																	"Em \"Database Name\", clicar em \"ventas\"\r",
+																	"Em \"Collection Name\", clicar em \"clientes\"\r",
+																	"\r",
+																	"Após ter executado essa requisição, e for retornado Status 202 Accepted\r",
+																	"E a aba \"Test Results\" estiver toda verdinha (caso não estiver, tentar executar a requisição novamente ou ajustar de acordo com a mensagem retornada nos testes que falharam na aba \"Test Results\")\r",
+																	"No Body de retorno do Postman, copiar o valor do campo nomeCompleto COM as aspas duplas \"\"\r",
+																	"Ex.: \"Teste identificadorDaUnidadeDeNegocio nao informado - vazio 377\"\r",
+																	"\r",
+																	"Retornar ao MongoDB\r",
+																	"No campo \"FILTER\", informar: { nome: <nomeCompleto retornado e copiado da API com as aspas duplas> }\r",
+																	"\r",
+																	"Apagar o trecho <nomeCompleto retornado e copiado da API com as aspas duplas>, e colar o valor copiado com as aspas duplas do campo nomeCompleto anteriormente\r",
+																	"Ex.: { nome: \"Teste identificadorDaUnidadeDeNegocio nao informado - vazio 377\" }\r",
+																	"\r",
+																	"Clicar no botão \"FIND\"\r",
+																	"\r",
+																	"Nos campos abaixo deve ser apresentado com os mesmos dados informados e retornados na requisição:\r",
+																	"- nome: \"Teste identificadorDaUnidadeDeNegocio nao informado - vazio <numero>\"\r",
+																	"- unidadeDeNegocioId: \"\"\r",
+																	"- sincronizadoComOBack: true\r",
+																	"\r",
+																	"*/\r",
+																	"\r",
+																	"// Persistido na base de dados MySQL \r",
+																	"/* --- BASE DE DADOS MYSQL ---\r",
+																	"Na base de dados MySQL, clicar no menu \"SQL Editor\" > \"New SQL script\" \r",
+																	"Ou clicar no menu \"Editor de SQL\" > \"Novo editor de SQL\"\r",
+																	"\r",
+																	"Copiar o script SQL abaixo:\r",
+																	"\r",
+																	"select\r",
+																	"\tcliente.id,\r",
+																	"\tcliente.ds_id_crm,\r",
+																	"\tpessoa_fisica.ds_nome,\r",
+																	"    cliente.dt_criacao,\r",
+																	"    cliente.st_ativo,\r",
+																	"\tcliente.unidade_de_negocio_id\r",
+																	"from\r",
+																	"\tpessoa_fisica,\r",
+																	"    cliente\r",
+																	"where\r",
+																	"\tpessoa_fisica.Id = cliente.Id\r",
+																	"\tand\r",
+																	"    cliente.ds_id_crm = '<identificadorUnico retornado e copiado da API>'\r",
+																	"\r",
+																	"Retornar a base de dados MySQL, colar o script SQL\r",
+																	"\r",
+																	"Após ter executado essa requisição, no Body de retorno do Postman, copiar o valor do campo identificadorUnico SEM as aspas duplas \"\"\r",
+																	"\r",
+																	"Retornar a base de dados, apagar o trecho <identificadorUnico retornado e copiado da API>, e colar entre as aspas simples '' o valor copiado do campo identificadorUnico anteriormente\r",
+																	"Ex.:\r",
+																	"    ...\r",
+																	"    and\r",
+																	"    cliente.ds_id_crm = '7f2b4e4c-87f6-4c1f-8db2-fd6461c2cdb4'\r",
+																	"\r",
+																	"No painel superior, no canto superior esquerdo, clicar no triãngulo laranja \">\" para executar o script SQL \r",
+																	"\r",
+																	"Se for apresentado alguma mensagem sobre não ser permitido conexão devido a alguma mudança de IP:\r",
+																	"- Acessar esse link da wiki: https://db1global.visualstudio.com/Plaenge/_wiki/wikis/Plaenge.wiki/1789/Configurar-Base-de-dados-no-ambiente-de-staging?anchor=base-de-dados-no-ambiente-de-staging-(demais-acessos)\r",
+																	"- Seguir os passos da seção \"Base de dados no ambiente de staging (Demais acessos)\" \r",
+																	"\r",
+																	"No painel inferior, no canto inferior esquerdo, NÃO clicar na opção \"Record\", NÃO clicar na opção \"Record\"\r",
+																	"\r",
+																	"Deve ser persistido na base de dados MySQL e deve ser apresentado os mesmos dados informados e retornados na requisição, inclsuive:\r",
+																	"- st_ativo = 0\r",
+																	"- unidade_de_negocio_id = [NULL]\r",
+																	"\r",
+																	"*/\r",
+																	""
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json",
+																"type": "text"
+															},
+															{
+																"key": "ApiKey",
+																"value": "{{apiKey}}",
+																"type": "text"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n    \"idNoCRM\": \"{{idNoCRM}}\",\n    \"nomeCompleto\": \"Teste identificadorDaUnidadeDeNegocio nao informado - vazio {{numero1}}\",\n    \"identificadorDaUnidadeDeNegocio\": \"\", \n    \"ativo\": false\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/api/ClienteCRM",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"ClienteCRM"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "identificadorDaUnidadeDeNegocio não informado (null)",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"identificadorDaUnidadeDeNegocio não informado (null) - Status 202 Accepted\", function () {\r",
+																	"    pm.response.to.have.status(202);\r",
+																	"});\r",
+																	"\r",
+																	"var jsonData = pm.response.json();\r",
+																	"var identificadorUnicoObtido = jsonData.identificadorUnico;\r",
+																	"var nomeCompletoObtido = jsonData.nomeCompleto;\r",
+																	"var mensagemObtida = jsonData.mensagem;\r",
+																	"\r",
+																	"var nomeCompletoEsperado = \"Teste identificadorDaUnidadeDeNegocio nao informado - null\";\r",
+																	"var mensagemEsperada = \"Lead/Cliente recebido com sucesso\"\r",
+																	"\r",
+																	"pm.test(\"identificadorDaUnidadeDeNegocio não informado (null) - Dados e Mensagem retornados\", function () {\r",
+																	"    pm.expect(identificadorUnicoObtido).is.not.null;\r",
+																	"    pm.expect(nomeCompletoObtido).to.include(nomeCompletoEsperado);\r",
+																	"    pm.expect(mensagemObtida).to.include(mensagemEsperada);\r",
+																	"});\r",
+																	"\r",
+																	"// Persistido na base de dados MongoDB \r",
+																	"/* --- BASE DE DADOS MONGODB ---\r",
+																	"Acessar a base de dados MongoDB\r",
+																	"Estar no menu lateral esquerdo\r",
+																	"Em \"Recents\", clicar na conection string de staging\r",
+																	"Clicar no botão \"Connect\"\r",
+																	"Em \"Database Name\", clicar em \"ventas\"\r",
+																	"Em \"Collection Name\", clicar em \"clientes\"\r",
+																	"\r",
+																	"Após ter executado essa requisição, e for retornado Status 202 Accepted\r",
+																	"E a aba \"Test Results\" estiver toda verdinha (caso não estiver, tentar executar a requisição novamente ou ajustar de acordo com a mensagem retornada nos testes que falharam na aba \"Test Results\")\r",
+																	"No Body de retorno do Postman, copiar o valor do campo nomeCompleto COM as aspas duplas \"\"\r",
+																	"Ex.: \"Teste identificadorDaUnidadeDeNegocio nao informado - null 073\"\r",
+																	"\r",
+																	"Retornar ao MongoDB\r",
+																	"No campo \"FILTER\", informar: { nome: <nomeCompleto retornado e copiado da API com as aspas duplas> }\r",
+																	"\r",
+																	"Apagar o trecho <nomeCompleto retornado e copiado da API com as aspas duplas>, e colar o valor copiado com as aspas duplas do campo nomeCompleto anteriormente\r",
+																	"Ex.: { nome: \"Teste identificadorDaUnidadeDeNegocio nao informado - null 073\" }\r",
+																	"\r",
+																	"Clicar no botão \"FIND\"\r",
+																	"\r",
+																	"Nos campos abaixo deve ser apresentado com os mesmos dados informados e retornados na requisição:\r",
+																	"- nome: \"Teste identificadorDaUnidadeDeNegocio nao informado - null <numero>\"\r",
+																	"- unidadeDeNegocioId: \"\"\r",
+																	"- sincronizadoComOBack: true\r",
+																	"\r",
+																	"*/\r",
+																	"\r",
+																	"// Persistido na base de dados MySQL \r",
+																	"/* --- BASE DE DADOS MYSQL ---\r",
+																	"Na base de dados MySQL, clicar no menu \"SQL Editor\" > \"New SQL script\" \r",
+																	"Ou clicar no menu \"Editor de SQL\" > \"Novo editor de SQL\"\r",
+																	"\r",
+																	"Copiar o script SQL abaixo:\r",
+																	"\r",
+																	"select\r",
+																	"\tcliente.id,\r",
+																	"\tcliente.ds_id_crm,\r",
+																	"\tpessoa_fisica.ds_nome,\r",
+																	"    cliente.dt_criacao,\r",
+																	"    cliente.st_ativo,\r",
+																	"\tcliente.unidade_de_negocio_id\r",
+																	"from\r",
+																	"\tpessoa_fisica,\r",
+																	"    cliente\r",
+																	"where\r",
+																	"\tpessoa_fisica.Id = cliente.Id\r",
+																	"\tand\r",
+																	"    cliente.ds_id_crm = '<identificadorUnico retornado e copiado da API>'\r",
+																	"\r",
+																	"Retornar a base de dados MySQL, colar o script SQL\r",
+																	"\r",
+																	"Após ter executado essa requisição, no Body de retorno do Postman, copiar o valor do campo identificadorUnico SEM as aspas duplas \"\"\r",
+																	"\r",
+																	"Retornar a base de dados, apagar o trecho <identificadorUnico retornado e copiado da API>, e colar entre as aspas simples '' o valor copiado do campo identificadorUnico anteriormente\r",
+																	"Ex.:\r",
+																	"    ...\r",
+																	"    and\r",
+																	"    cliente.ds_id_crm = '2f4108bc-4b9f-4199-88b1-e364b8eba006'\r",
+																	"\r",
+																	"No painel superior, no canto superior esquerdo, clicar no triãngulo laranja \">\" para executar o script SQL \r",
+																	"\r",
+																	"Se for apresentado alguma mensagem sobre não ser permitido conexão devido a alguma mudança de IP:\r",
+																	"- Acessar esse link da wiki: https://db1global.visualstudio.com/Plaenge/_wiki/wikis/Plaenge.wiki/1789/Configurar-Base-de-dados-no-ambiente-de-staging?anchor=base-de-dados-no-ambiente-de-staging-(demais-acessos)\r",
+																	"- Seguir os passos da seção \"Base de dados no ambiente de staging (Demais acessos)\" \r",
+																	"\r",
+																	"No painel inferior, no canto inferior esquerdo, NÃO clicar na opção \"Record\", NÃO clicar na opção \"Record\"\r",
+																	"\r",
+																	"Deve ser persistido na base de dados MySQL e deve ser apresentado os mesmos dados informados e retornados na requisição, inclsuive:\r",
+																	"- st_ativo = 0\r",
+																	"- unidade_de_negocio_id = [NULL]\r",
+																	"\r",
+																	"*/\r",
+																	""
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json",
+																"type": "text"
+															},
+															{
+																"key": "ApiKey",
+																"value": "{{apiKey}}",
+																"type": "text"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n    \"idNoCRM\": \"{{idNoCRM}}\",\n    \"nomeCompleto\": \"Teste identificadorDaUnidadeDeNegocio nao informado - null {{numero1}}\",\n    \"identificadorDaUnidadeDeNegocio\": null, \n    \"ativo\": false\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/api/ClienteCRM",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"ClienteCRM"
+															]
+														}
+													},
+													"response": []
+												},
+												{
+													"name": "identificadorDaUnidadeDeNegocio não informado (ausente)",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"identificadorDaUnidadeDeNegocio não informado (ausente) - Status 202 Accepted\", function () {\r",
+																	"    pm.response.to.have.status(202);\r",
+																	"});\r",
+																	"\r",
+																	"var jsonData = pm.response.json();\r",
+																	"var identificadorUnicoObtido = jsonData.identificadorUnico;\r",
+																	"var nomeCompletoObtido = jsonData.nomeCompleto;\r",
+																	"var mensagemObtida = jsonData.mensagem;\r",
+																	"\r",
+																	"var nomeCompletoEsperado = \"Teste identificadorDaUnidadeDeNegocio nao informado - ausente\";\r",
+																	"var mensagemEsperada = \"Lead/Cliente recebido com sucesso\"\r",
+																	"\r",
+																	"pm.test(\"identificadorDaUnidadeDeNegocio não informado (ausente) - Dados e Mensagem retornados\", function () {\r",
+																	"    pm.expect(identificadorUnicoObtido).is.not.null;\r",
+																	"    pm.expect(nomeCompletoObtido).to.include(nomeCompletoEsperado);\r",
+																	"    pm.expect(mensagemObtida).to.include(mensagemEsperada);\r",
+																	"});\r",
+																	"\r",
+																	"// Persistido na base de dados MongoDB \r",
+																	"/* --- BASE DE DADOS MONGODB ---\r",
+																	"Acessar a base de dados MongoDB\r",
+																	"Estar no menu lateral esquerdo\r",
+																	"Em \"Recents\", clicar na conection string de staging\r",
+																	"Clicar no botão \"Connect\"\r",
+																	"Em \"Database Name\", clicar em \"ventas\"\r",
+																	"Em \"Collection Name\", clicar em \"clientes\"\r",
+																	"\r",
+																	"Após ter executado essa requisição, e for retornado Status 202 Accepted\r",
+																	"E a aba \"Test Results\" estiver toda verdinha (caso não estiver, tentar executar a requisição novamente ou ajustar de acordo com a mensagem retornada nos testes que falharam na aba \"Test Results\")\r",
+																	"No Body de retorno do Postman, copiar o valor do campo nomeCompleto COM as aspas duplas \"\"\r",
+																	"Ex.: \"Teste identificadorDaUnidadeDeNegocio nao informado - ausente 254\"\r",
+																	"\r",
+																	"Retornar ao MongoDB\r",
+																	"No campo \"FILTER\", informar: { nome: <nomeCompleto retornado e copiado da API com as aspas duplas> }\r",
+																	"\r",
+																	"Apagar o trecho <nomeCompleto retornado e copiado da API com as aspas duplas>, e colar o valor copiado com as aspas duplas do campo nomeCompleto anteriormente\r",
+																	"Ex.: { nome: \"Teste identificadorDaUnidadeDeNegocio nao informado - ausente 254\" }\r",
+																	"\r",
+																	"Clicar no botão \"FIND\"\r",
+																	"\r",
+																	"Nos campos abaixo deve ser apresentado com os mesmos dados informados e retornados na requisição:\r",
+																	"- nome: \"Teste identificadorDaUnidadeDeNegocio nao informado - ausente <numero>\"\r",
+																	"- unidadeDeNegocioId: \"\"\r",
+																	"- sincronizadoComOBack: true\r",
+																	"\r",
+																	"*/\r",
+																	"\r",
+																	"// Persistido na base de dados MySQL \r",
+																	"/* --- BASE DE DADOS MYSQL ---\r",
+																	"Na base de dados MySQL, clicar no menu \"SQL Editor\" > \"New SQL script\" \r",
+																	"Ou clicar no menu \"Editor de SQL\" > \"Novo editor de SQL\"\r",
+																	"\r",
+																	"Copiar o script SQL abaixo:\r",
+																	"\r",
+																	"select\r",
+																	"\tcliente.id,\r",
+																	"\tcliente.ds_id_crm,\r",
+																	"\tpessoa_fisica.ds_nome,\r",
+																	"    cliente.dt_criacao,\r",
+																	"    cliente.st_ativo,\r",
+																	"\tcliente.unidade_de_negocio_id\r",
+																	"from\r",
+																	"\tpessoa_fisica,\r",
+																	"    cliente\r",
+																	"where\r",
+																	"\tpessoa_fisica.Id = cliente.Id\r",
+																	"\tand\r",
+																	"    cliente.ds_id_crm = '<identificadorUnico retornado e copiado da API>'\r",
+																	"\r",
+																	"Retornar a base de dados MySQL, colar o script SQL\r",
+																	"\r",
+																	"Após ter executado essa requisição, no Body de retorno do Postman, copiar o valor do campo identificadorUnico SEM as aspas duplas \"\"\r",
+																	"\r",
+																	"Retornar a base de dados, apagar o trecho <identificadorUnico retornado e copiado da API>, e colar entre as aspas simples '' o valor copiado do campo identificadorUnico anteriormente\r",
+																	"Ex.:\r",
+																	"    ...\r",
+																	"    and\r",
+																	"    cliente.ds_id_crm = '7e63ec14-431f-4be1-9e17-b25d4b83ca03'\r",
+																	"\r",
+																	"No painel superior, no canto superior esquerdo, clicar no triãngulo laranja \">\" para executar o script SQL \r",
+																	"\r",
+																	"Se for apresentado alguma mensagem sobre não ser permitido conexão devido a alguma mudança de IP:\r",
+																	"- Acessar esse link da wiki: https://db1global.visualstudio.com/Plaenge/_wiki/wikis/Plaenge.wiki/1789/Configurar-Base-de-dados-no-ambiente-de-staging?anchor=base-de-dados-no-ambiente-de-staging-(demais-acessos)\r",
+																	"- Seguir os passos da seção \"Base de dados no ambiente de staging (Demais acessos)\" \r",
+																	"\r",
+																	"No painel inferior, no canto inferior esquerdo, NÃO clicar na opção \"Record\", NÃO clicar na opção \"Record\"\r",
+																	"\r",
+																	"Deve ser persistido na base de dados MySQL e deve ser apresentado os mesmos dados informados e retornados na requisição, inclsuive:\r",
+																	"- st_ativo = 0\r",
+																	"- unidade_de_negocio_id = [NULL]\r",
+																	"\r",
+																	"*/\r",
+																	""
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json",
+																"type": "text"
+															},
+															{
+																"key": "ApiKey",
+																"value": "{{apiKey}}",
+																"type": "text"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n    \"idNoCRM\": \"{{idNoCRM}}\",\n    \"nomeCompleto\": \"Teste identificadorDaUnidadeDeNegocio nao informado - ausente {{numero1}}\",\n   \n    \"ativo\": false\n}"
+														},
+														"url": {
+															"raw": "{{baseUrl}}/api/ClienteCRM",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"ClienteCRM"
+															]
+														}
+													},
+													"response": []
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// função que gera números aleatórios",
+					"function geraNumerosAleatorios(qtdeNumeros) {",
+					"  var text = \"\";",
+					"  var possible = \"0123456789\";",
+					"",
+					"  for (var i = 0; i < qtdeNumeros; i++)",
+					"    text += possible.charAt(Math.floor(Math.random() * possible.length));",
+					"",
+					"  return text;",
+					"}",
+					"",
+					"// define números aleatórios em variáveis da collection",
+					"pm.collectionVariables.set(\"numero1\", geraNumerosAleatorios(3));",
+					"",
+					"// define UUID's (Guids) aleatórios em variáveis da collection",
+					"let guid1 = pm.globals.replaceIn(\"{{$guid}}\")",
+					"pm.collectionVariables.set(\"idNoCRM\", guid1.toLowerCase());"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://staging-plaenge-afd-sa.azurefd.net"
+		},
+		{
+			"key": "apiKey",
+			"value": "xpHJtfKSjJp8yb7xu66dWfCyroxKdgpMKj/CmMiYx7TzoKuCxYc2xaYKTPOarILzso+0y53UsdWa35nxu6ie8ZmIl8eBCtS28JuNlPOCrY3KkPOghKLztJCuQzLSklEKxq9O8Ym3rWt+8qC+hvGxm7JS85yZoEEKXtO9OdGF8JyfuFhdXMeP04o="
+		},
+		{
+			"key": "numero1",
+			"value": ""
+		},
+		{
+			"key": "idNoCRM",
+			"value": ""
+		}
+	]
+}
